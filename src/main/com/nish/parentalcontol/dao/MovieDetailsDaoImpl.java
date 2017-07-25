@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import com.nish.parentalcontol.connection.DBConnection;
+import com.nish.parentalcontol.exception.TechnicalFailureException;
 /**
  * Dao impl class for fetching details from DB
  * @author Nishanth Mathew Joy
@@ -42,14 +43,13 @@ public class MovieDetailsDaoImpl implements MovieDetailsDao{
 
 			connection.commit();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			throw new TechnicalFailureException(exception.getMessage());
 		}finally{
 			try {
 				
 				connection.close();
 			} catch (SQLException exception) {
-				// TODO Auto-generated catch block
-				exception.printStackTrace();
+				throw new TechnicalFailureException(exception.getMessage());
 			}
 		}
 		return movieRestriction;

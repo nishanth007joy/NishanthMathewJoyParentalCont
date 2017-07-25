@@ -21,26 +21,15 @@ public class MovieServiceImpl implements MovieService{
 	public MovieServiceImpl(MovieDetailsDao movieDetailsDao) {
 		this.movieDetailsDao = movieDetailsDao;
 	}
+	public MovieServiceImpl() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * This is set on a private
 	 */
-//	private Map<String,String> movieMap;
-//	{
-//		movieMap = new HashMap<>();
-//		movieMap.put("Mov1", "PG");
-//		movieMap.put("Mov2", "U");
-//		movieMap.put("Mov3", "12");
-//		movieMap.put("Mov3", "15");
-//		movieMap.put("Mov3", "18");
-//	}
+
 	@Override
 	public String getParentalControlLevel(String movieId){
 		return movieDetailsDao.getMovieDetails(movieId);
-//		if(movieMap.containsKey(movieId) && null != movieMap.get(movieId)){
-//			return movieMap.get(movieId);
-//		}else{
-//			throw new TitleNotFoundException(BusinessErrorCode.TECH_ERROR001.getCode());
-//		}
-
 	}
 }

@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.nish.parentalcontol.connection.DBConnection;
 import com.nish.parentalcontol.enums.ParentalControlLevelEnum;
+import com.nish.parentalcontol.exception.TitleNotFoundException;
 import com.nish.parentalcontol.factory.ParentalBeanFactory;
 import com.nish.parentalcontol.service.ParentalControlService;
 
@@ -84,6 +85,16 @@ public class ParentalServiceClientIntegrationTest {
 	@Test
 	public void integrationTestFalse() {
 		assertFalse(parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), "Mov5"));
+	}
+	
+	@Test(expected = TitleNotFoundException.class)
+	public void integrationTestInvalid() {
+		parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), "Mov9");
+	}
+	
+	@Test(expected = TitleNotFoundException.class)
+	public void integrationTestNull() {
+		parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), null);
 	}
 	@AfterClass
 	public static void tearDown(){

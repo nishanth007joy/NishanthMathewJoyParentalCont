@@ -9,6 +9,8 @@ public enum BusinessErrorCode {
 	 * No movie record found
 	 */
 	MOV001("NOT_FOUND", "No matching record found for movie."),
+	MOV002("NOT_FOUND", "Invalid restriction input."),
+	MOV003("NOT_FOUND", "Invalid movie is input."),
 	TECH_ERROR001("TECHNICAL_ERROR", "System error.");
 
 	/** Code */
