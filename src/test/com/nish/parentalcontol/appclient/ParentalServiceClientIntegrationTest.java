@@ -16,17 +16,26 @@ import com.nish.parentalcontol.enums.ParentalControlLevelEnum;
 import com.nish.parentalcontol.exception.TitleNotFoundException;
 import com.nish.parentalcontol.factory.ParentalBeanFactory;
 import com.nish.parentalcontol.service.ParentalControlService;
-
+/**
+ * This is the main integration test class
+ * @author Nishanth Mathew Joy
+ *
+ */
 public class ParentalServiceClientIntegrationTest {
 	private static ParentalControlService parentControlService;
+	/**
+	 * this methord set up dependency for application
+	 */
 	@BeforeClass
 	public static void setUp() {
 		parentControlService = ParentalBeanFactory.getParentalControlService();
 	}
+	/**
+	 * This will setup test data in H2 database
+	 */
 	@Before
 	public void setUpData(){
 		Connection connection = DBConnection.getDBConnection();
-		String movieRestriction=null;
 		PreparedStatement deletePreparedStatement = null;
 		
 		PreparedStatement createPreparedStatement = null;
@@ -62,7 +71,7 @@ public class ParentalServiceClientIntegrationTest {
 			insertPreparedStatement.setString(1, "Mov5");
 			insertPreparedStatement.setString(2, ParentalControlLevelEnum.Fifteen.getDescription());
 			insertPreparedStatement.addBatch();
-			insertPreparedStatement.executeUpdate();
+			insertPreparedStatement.executeBatch();
 			insertPreparedStatement.close();
 			connection.commit();
 		} catch (SQLException exception) {
@@ -77,21 +86,30 @@ public class ParentalServiceClientIntegrationTest {
 			}
 		}
 	}
+	/**
+	 * This will test true returned for movie restriction satisfied
+	 */
 	@Test
 	public void integrationTestTrue() {
 		assertTrue(parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Eighteen.getDescription(), "Mov5"));
 	}
-	
+	/**
+	 * This will test false returned for movie restriction not satisfied
+	 */
 	@Test
 	public void integrationTestFalse() {
 		assertFalse(parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), "Mov5"));
 	}
-	
+	/**
+	 * Exception scenario for movie not available in DB
+	 */
 	@Test(expected = TitleNotFoundException.class)
 	public void integrationTestInvalid() {
 		parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), "Mov9");
 	}
-	
+	/**
+	 * Exception scenario for invalid input
+	 */
 	@Test(expected = TitleNotFoundException.class)
 	public void integrationTestNull() {
 		parentControlService.isMovieSatifiesParentalControl(ParentalControlLevelEnum.Twelve.getDescription(), null);
