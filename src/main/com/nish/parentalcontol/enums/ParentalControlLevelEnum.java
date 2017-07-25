@@ -49,7 +49,7 @@ public enum ParentalControlLevelEnum {
 		case "18":
 			return Eighteen;
 		default:
-			throw new IllegalArgumentException("Invalid code " + code);
+			throw new IllegalArgumentException("Invalid code " );
 		}
 	}
 }

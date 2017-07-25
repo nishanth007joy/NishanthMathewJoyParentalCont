@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import com.nish.parentalcontol.connection.DBConnection;
-
+/**
+ * Dao impl class for fetching details from DB
+ * @author Nishanth Mathew Joy
+ *
+ */
 public class MovieDetailsDaoImpl implements MovieDetailsDao{
 	@Override
 	public String getMovieDetails(String movieId) {
@@ -17,10 +21,10 @@ public class MovieDetailsDaoImpl implements MovieDetailsDao{
 		PreparedStatement createPreparedStatement = null;
 		PreparedStatement insertPreparedStatement = null;
 		try {
-//			connection.setAutoCommit(false);
-//			createPreparedStatement = connection.prepareStatement("CREATE TABLE MOVIE_DETAILS(MOVIE_ID varchar(10) , RESTRICTION varchar(5))");
-//			createPreparedStatement.executeUpdate();
-//			createPreparedStatement.close();
+			connection.setAutoCommit(false);
+			createPreparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS MOVIE_DETAILS(MOVIE_ID varchar(10) , RESTRICTION varchar(5))");
+			createPreparedStatement.executeUpdate();
+			createPreparedStatement.close();
 
 			insertPreparedStatement = connection.prepareStatement("INSERT INTO MOVIE_DETAILS" + "(MOVIE_ID, RESTRICTION) values" + "(?,?)");
 			insertPreparedStatement.setString(1, "Mov1");
@@ -41,6 +45,7 @@ public class MovieDetailsDaoImpl implements MovieDetailsDao{
 			exception.printStackTrace();
 		}finally{
 			try {
+				
 				connection.close();
 			} catch (SQLException exception) {
 				// TODO Auto-generated catch block

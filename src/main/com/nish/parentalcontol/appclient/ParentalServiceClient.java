@@ -22,5 +22,7 @@ public class ParentalServiceClient {
 		ParentalControlService parentalControlService = 
 				ParentalBeanFactory.getParentalControlService();
 		boolean isMovieAllowed = parentalControlService.isMovieSatifiesParentalControl(parentalControlLevel, movieId);
+		
+		System.out.println("Output for Movie id "+movieId +" and parentalControlLevel "+parentalControlLevel +" is " + isMovieAllowed);
 	} 
 }
